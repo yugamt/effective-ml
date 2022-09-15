@@ -8,8 +8,8 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Out-of-distribution detection with Plex" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A demo on detecting Out of Distribution data points" />
-<meta property="og:description" content="A demo on detecting Out of Distribution data points" />
+<meta name="description" content="A demo on detecting Out of Distribution data points with Google Plex" />
+<meta property="og:description" content="A demo on detecting Out of Distribution data points with Google Plex" />
 <link rel="canonical" href="https://yugamt.github.io/effective-ml/jupyter/2022/09/16/OOD-detection-with-Plex.html" />
 <meta property="og:url" content="https://yugamt.github.io/effective-ml/jupyter/2022/09/16/OOD-detection-with-Plex.html" />
 <meta property="og:site_name" content="fastpages" />
@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Out-of-distribution detection with Plex" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-09-16T00:00:00-05:00","datePublished":"2022-09-16T00:00:00-05:00","description":"A demo on detecting Out of Distribution data points","headline":"Out-of-distribution detection with Plex","mainEntityOfPage":{"@type":"WebPage","@id":"https://yugamt.github.io/effective-ml/jupyter/2022/09/16/OOD-detection-with-Plex.html"},"url":"https://yugamt.github.io/effective-ml/jupyter/2022/09/16/OOD-detection-with-Plex.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-09-16T00:00:00-05:00","datePublished":"2022-09-16T00:00:00-05:00","description":"A demo on detecting Out of Distribution data points with Google Plex","headline":"Out-of-distribution detection with Plex","mainEntityOfPage":{"@type":"WebPage","@id":"https://yugamt.github.io/effective-ml/jupyter/2022/09/16/OOD-detection-with-Plex.html"},"url":"https://yugamt.github.io/effective-ml/jupyter/2022/09/16/OOD-detection-with-Plex.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/effective-ml/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://yugamt.github.io/effective-ml/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/effective-ml/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -73,13 +73,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Out-of-distribution detection with Plex</h1><p class="page-description">A demo on detecting Out of Distribution data points</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-09-16T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Out-of-distribution detection with Plex</h1><p class="page-description">A demo on detecting Out of Distribution data points with Google Plex</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-09-16T00:00:00-05:00" itemprop="datePublished">
         Sep 16, 2022
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      9 min read
+      10 min read
     
 </span></p>
 
@@ -254,7 +254,8 @@ ModuleNotFoundError: No module named 'seqio'
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Set a base seed to use for the notebook.</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">local_devices</span><span class="p">())</span>
 </pre></div>
@@ -262,7 +263,10 @@ ModuleNotFoundError: No module named 'seqio'
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -287,6 +291,7 @@ WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -363,7 +368,10 @@ WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -386,6 +394,7 @@ ModuleNotFoundError: No module named 'official.nlp.bert'
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -612,7 +621,10 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -629,6 +641,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -702,7 +715,10 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -727,6 +743,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -928,7 +945,10 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -945,6 +965,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -1007,7 +1028,10 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1024,6 +1048,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -1099,7 +1124,10 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1115,6 +1143,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -1160,7 +1189,10 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1176,6 +1208,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -1204,7 +1237,10 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1221,6 +1257,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 
+    </details>
 </div>
     
 
