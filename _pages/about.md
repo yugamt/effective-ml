@@ -4,8 +4,5 @@ title: About Me
 permalink: /about/
 ---
 
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
+Hello there! I am Yugam Tiwari, currently a Assoicate Machine Learning Scientist at  **[Wadhwani AI](https://www.wadhwaniai.org/)**.
 
-
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
