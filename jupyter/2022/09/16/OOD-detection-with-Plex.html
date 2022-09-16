@@ -719,7 +719,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For our Out of Distribution Dataset, we will be using the open-sourced <a href="https://www.tensorflow.org/datasets/catalog/imagenet_v2">Imagenet_v2</a> dataset which is a dataset of Zalando's article images. Each example is a 28x28 grayscale image, associated with a label from 10 classes.</p>
+<p>For our Out of Distribution Dataset, we will be using the open-sourced <a href="https://www.tensorflow.org/datasets/catalog/fashion_mnist">Fashion_mnist</a> dataset which is a dataset of Zalando's article images. Each example is a 28x28 grayscale image, associated with a label from 10 classes.</p>
 
 </div>
 </div>
@@ -731,8 +731,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># https://www.tensorflow.org/datasets/catalog/fashion_mnist</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="s2">"fashion_mnist"</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s2">"fashion_mnist"</span>
 <span class="n">tfds</span><span class="o">.</span><span class="n">builder</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">download_and_prepare</span><span class="p">()</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span> <span class="o">*</span> <span class="n">jax</span><span class="o">.</span><span class="n">local_device_count</span><span class="p">()</span>
 <span class="n">split</span> <span class="o">=</span> <span class="s2">"test"</span>
@@ -847,8 +846,10 @@ with a newly trained last layer.</p>
 Gaussian $N (µ_k, Σ),\ k = 1, 2, . . . , K
 $ to each of the K in-distribution classes based on the
 embedding $z$. We estimate the mean vectors and covariance matrix as: $µ_k$ and $Σ$. Note that the class-conditional means $µ_k$ are independent for each class, while the covariance matrix $Σ$ is shared by
-all classes to avoid under-fitting errors. For a test input $z$, Mahalanobis distance is calculated as:
-$MD(z) = min_{k} \{ (z - \mu_{k})^{T} \ Σ^{-1} \ (z - \mu_{k})\}$</p>
+all classes to avoid under-fitting errors. For a test input $z$, Mahalanobis distance is calculated as: 
+\begin{equation}
+MD(z) = min_{k} \{ (z - \mu_{k})^{T} \ Σ^{-1} \ (z - \mu_{k})\}
+\end{equation}</p>
 
 </div>
 </div>
