@@ -97,7 +97,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      12 min read
     
 </span></p>
 
@@ -187,7 +187,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This notebook demonstrates how one can utilize the released checkpoints from the <em>Plex: Towards Reliability using Pretrained Large Model Extensions</em> paper which are using <a href="https://jax.readthedocs.io/">JAX</a> and <a href="https://www.tensorflow.org/">Tensorflow</a> as backends. The <strong>General usage</strong> section provides a minimal setup for loading the checkpoints. Plex is designed to excel in three areas of reliability, <strong><em>Uncertainty</em></strong>, <strong><em>Robust Generalization</em></strong>, and <strong><em>Adaptation</em></strong>. Here, we focus at the <strong><em>Adaptation</em></strong> aspect of pretrained models by demonstrating zero-shot out-of-distribution (OOD) detection.</p>
+<p>This notebook demonstrates how one can utilize the released checkpoints from the <em>Plex: Towards Reliability using Pretrained Large Model Extensions</em> paper which are using <a href="https://jax.readthedocs.io/">JAX</a> and <a href="https://www.tensorflow.org/">Tensorflow</a> as backends. The demo showcases basic mechanics for loading and using the pretrained Plex model checkpoints, as well as more advanced usecases like zero-shot out-of-distribution detection. The <strong>General usage</strong> section provides a minimal setup for loading the checkpoints. Plex is designed to excel in three areas of reliability, <strong><em>Uncertainty</em></strong>, <strong><em>Robust Generalization</em></strong>, and <strong><em>Adaptation</em></strong>. Here, we focus at the <strong><em>Adaptation</em></strong> aspect of pretrained models by demonstrating zero-shot out-of-distribution (OOD) detection.</p>
 
 </div>
 </div>
@@ -198,6 +198,14 @@ window.onload = wrap_img;
 <h2 id="Imports">
 <a class="anchor" href="#Imports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Imports<a class="anchor-link" href="#Imports"> </a>
 </h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Broadly speaking, Plex is a set of pre-trained large model extensions that can be applied to many different architectures like the current state-of-the-art Vision Transformers and T5 models. For our demonstration, we will be loading the pretrained ViT-Plex Large model, that was pretrained on ImageNet-21K, using <a href="https://jax.readthedocs.io/">JAX</a> backend. Check out the paper <a href="https://arxiv.org/pdf/2207.07411.pdf">here</a> and the open-sourced implementation <a href="https://github.com/google/uncertainty-baselines/tree/main/experimental/plex">here</a>.</p>
+
 </div>
 </div>
 </div>
@@ -265,6 +273,14 @@ ModuleNotFoundError: No module named 'seqio'
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to generate pseudorandom numbers, JAX differs from NumPy and requires an explicit PRNG (pseudorandom number generators) state to be passed as a first argument. For reasons, check <a href="https://colab.research.google.com/github/google/jax/blob/main/docs/jax-101/05-random-numbers.ipynb#scrollTo=JGCZI9UTl7o4">this</a>.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -331,6 +347,14 @@ WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A key feature of Plex is more efficient ensembling based on submodels that each make a prediction that is then aggregated. In addition, Plex swaps each architecture’s linear last layer with a <a href="https://arxiv.org/abs/2006.10108">Gaussian process</a> or <a href="https://arxiv.org/abs/2105.10305">heteroscedastic layer</a> to better represent predictive uncertainty. These ideas were found to work very well for models trained from scratch at the ImageNet scale. The models are trained with varying sizes up to 325 million parameters for vision (ViT-Plex L) and 1 billion parameters for language (T5-Plex L) and pre-training dataset sizes up to 4 billion examples. For our demo, we will be using the <a href="https://arxiv.org/abs/2010.11929">ViT</a> architecture with the <a href="https://arxiv.org/abs/2002.06715">Batch Ensemble</a> layers. To specify the layers, we can define the config file as follows:</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -377,7 +401,7 @@ WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_classes</span> <span class="o">=</span> <span class="mi">21843</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_classes</span> <span class="o">=</span> <span class="mi">21843</span> <span class="c1"># Total number of classes in ImageNet-21k</span>
 <span class="n">config</span> <span class="o">=</span> <span class="n">get_pretrained_config</span><span class="p">()</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">ub</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">vision_transformer_be</span><span class="p">(</span>
     <span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
@@ -507,6 +531,15 @@ ModuleNotFoundError: No module named 'official.nlp.bert'
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We require a model function that can work across multiple TPU devices or across
+multiple GPUs for high performance.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -515,14 +548,6 @@ ModuleNotFoundError: No module named 'official.nlp.bert'
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pmapped_representation_fn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">pmap</span><span class="p">(</span><span class="n">representation_fn</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-<span class="c1"># Create a model function that works across multiple TPU devices or across</span>
-<span class="c1"># multiple GPUs for performance. The value for `in_axes` means that the `params`</span>
-<span class="c1"># argument for `representation_fn` will be copied to each device, the `images` will be</span>
-<span class="c1"># split ("sharded") across the devices along the first axis, and the `rng` will</span>
-<span class="c1"># be copied to each device. Note that this means that `images` should have shape</span>
-<span class="c1"># `(num_devices, batch_size/num_devices, h, w, c)` so that each device processes</span>
-<span class="c1"># a `(batch_size/num_devices, h, w, c)` chunk of the images. The `params` and</span>
-<span class="c1"># `rng` will be the same as in the "Singe image" example up above.</span>
 </pre></div>
 
     </div>
@@ -535,9 +560,25 @@ ModuleNotFoundError: No module named 'official.nlp.bert'
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>The value for <code>in_axes</code> means that the <code>params</code> argument for <code>representation_fn</code> will be copied to each device, the <code>images</code> will be split ("sharded") across the devices along the first axis, and the <code>rng</code> will be copied to each device. Note that this means that <code>images</code> should have shape <code>(num_devices, batch_size, h, w, c)</code> so that each device processes a <code>(batch_size/num_devices, h, w, c)</code> chunk of the images. The <code>params</code> and <code>rng</code> will be the same across all the devices.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Load-In-Distribution-Dataset">
 <a class="anchor" href="#Load-In-Distribution-Dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Load In Distribution Dataset<a class="anchor-link" href="#Load-In-Distribution-Dataset"> </a>
 </h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For our In Distribution Dataset, we will be using the open-sourced <a href="https://www.tensorflow.org/datasets/catalog/imagenet_v2">Imagenet_v2</a> dataset which mainly contains new test data for the ImageNet benchmark.</p>
+
 </div>
 </div>
 </div>
@@ -549,10 +590,6 @@ ModuleNotFoundError: No module named 'official.nlp.bert'
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">load_val_ds</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">split</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">preprocess_eval_fn</span><span class="p">):</span>
-  <span class="c1"># NOTE: The data loader yields examples of shape</span>
-  <span class="c1"># (num_devices, batch_size/num_devices, ...), i.e., it splits the batch_size</span>
-  <span class="c1"># across the number of local devices, under the assumption that TPUs or</span>
-  <span class="c1"># multiple GPUs are used.</span>
     <span class="n">val_ds</span> <span class="o">=</span> <span class="n">input_utils</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span>
       <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
       <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">,</span>
@@ -576,6 +613,14 @@ ModuleNotFoundError: No module named 'official.nlp.bert'
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The data loader yields examples of shape (num_devices, batch_size, ...), that is, it splits the batch_size across the number of local devices, under the assumption that TPUs or multiple GPUs are used.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -583,8 +628,7 @@ ModuleNotFoundError: No module named 'official.nlp.bert'
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># https://www.tensorflow.org/datasets/catalog/imagenet_v2</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="s2">"imagenet_v2"</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s2">"imagenet_v2"</span>
 <span class="n">tfds</span><span class="o">.</span><span class="n">builder</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">download_and_prepare</span><span class="p">()</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span> <span class="o">*</span> <span class="n">jax</span><span class="o">.</span><span class="n">local_device_count</span><span class="p">()</span>
 <span class="n">split</span> <span class="o">=</span> <span class="s2">"test"</span>
@@ -672,6 +716,14 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For our Out of Distribution Dataset, we will be using the open-sourced <a href="https://www.tensorflow.org/datasets/catalog/fashion_mnist">Fashion_mnist</a> dataset which is a dataset of Zalando's article images. Each example is a 28x28 grayscale image, associated with a label from 10 classes.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -679,8 +731,7 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># https://www.tensorflow.org/datasets/catalog/fashion_mnist</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="s2">"fashion_mnist"</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s2">"fashion_mnist"</span>
 <span class="n">tfds</span><span class="o">.</span><span class="n">builder</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">download_and_prepare</span><span class="p">()</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span> <span class="o">*</span> <span class="n">jax</span><span class="o">.</span><span class="n">local_device_count</span><span class="p">()</span>
 <span class="n">split</span> <span class="o">=</span> <span class="s2">"test"</span>
@@ -774,6 +825,41 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Given that the pretrained model itself provides rich
+and robust representations, we can use that as a feature extractor and conduct zero-shot
+open set recognition without any training examples. To do so, we can take advantage of
+Mahalanobis distance (Maha) <a href="https://arxiv.org/abs/1807.03888">Lee et al., 2018</a> as a detection score: Maha measures the
+distance between the test input and the fitted training distribution in the embedding space.
+It operates on a fixed representation layer and does not require operating on softmax outputs
+with a newly trained last layer.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The training distribution is fitted using a class conditional
+Gaussian $N (µ_k, Σ),\ k = 1, 2, . . . , K
+$ to each of the K in-distribution classes based on the
+embedding $z$. We estimate the mean vectors and covariance matrix as: $µ_k$ and $Σ$. Note that the class-conditional means $µ_k$ are independent for each class, while the covariance matrix $Σ$ is shared by
+all classes to avoid under-fitting errors. For a test input $z$, Mahalanobis distance is calculated as: \</p>
+<p>$MD(z) = min_{k} \{ (z - \mu_{k})^{T} \ Σ^{-1} \ (z - \mu_{k})\}$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to remove the interference of background distributions, a modified version of Mahalanobis distance which corrects for the background confounding effect using another Gaussian distribution fitted using entire training data , ignoring class labels, is used. This is known as the Relative Mahalanobis Distance and it is calculated as: $RMD(z) = MD(z) - MD_0(z)$ where $MD_0(z)$ indicates the Mahalanobis distance to a distribution fitted to the entire training data not considering the class labels.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -840,7 +926,6 @@ WARNING:absl:options.experimental_threading is deprecated. Use options.threading
 <span class="sd">    and across all classes in `means`.</span>
 
 <span class="sd">    Note that this function technically computes the squared Mahalanobis distance,</span>
-<span class="sd">    which is consistent with Eq.(2) in &lt;TODO&gt;.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">    embeds: A matrix size [n_test_sample, n_dim], where n_test_sample is the</span>
