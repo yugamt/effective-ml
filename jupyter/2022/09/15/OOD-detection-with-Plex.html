@@ -560,7 +560,7 @@ multiple GPUs for high performance.</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The value for <code>in_axes</code> means that the <code>params</code> argument for <code>representation_fn</code> will be copied to each device, the <code>images</code> will be split ("sharded") across the devices along the first axis, and the <code>rng</code> will be copied to each device. Note that this means that <code>images</code> should have shape <code>(num_devices, batch_size, h, w, c)</code> so that each device processes a <code>(batch_size/num_devices, h, w, c)</code> chunk of the images. The <code>params</code> and <code>rng</code> will be the same across all the devices.</p>
+<p>The value for <code>in_axes</code> means that the <code>params</code> argument for <code>representation_fn</code> will be copied to each device, the <code>images</code> will be split ("sharded") across the devices along the first axis, and the <code>rng</code> will be copied to each device. Note that this means that <code>images</code> should have shape <code>(num_devices, batch_size, h, w, c)</code> so that each device processes a <code>(batch_size, h, w, c)</code> chunk of the images. The <code>params</code> and <code>rng</code> will be the same across all the devices.</p>
 
 </div>
 </div>
@@ -846,8 +846,8 @@ with a newly trained last layer.</p>
 Gaussian $N (µ_k, Σ),\ k = 1, 2, . . . , K
 $ to each of the K in-distribution classes based on the
 embedding $z$. We estimate the mean vectors and covariance matrix as: $µ_k$ and $Σ$. Note that the class-conditional means $µ_k$ are independent for each class, while the covariance matrix $Σ$ is shared by
-all classes to avoid under-fitting errors. For a test input $z$, Mahalanobis distance is calculated as: \</p>
-<p>$MD(z) = min_{k} \{ (z - \mu_{k})^{T} \ Σ^{-1} \ (z - \mu_{k})\}$</p>
+all classes to avoid under-fitting errors. For a test input $z$, Mahalanobis distance is calculated as: 
+$MD(z) = min_{k} \{ (z - \mu_{k})^{T} \ Σ^{-1} \ (z - \mu_{k})\}$</p>
 
 </div>
 </div>
