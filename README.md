@@ -6,7 +6,7 @@
 
 Project Website : https://yugamt.github.io/effective-ml/
 
-# This repository contains notebooks and fastpage setup for the Effective-ML Workshop'22
+# This repository contains notebooks and fastpage setup for "OOD Detection with Plex" to be presented at Effective-ML Workshop'22
 
 
 _powered by [fastpages](https://github.com/fastai/fastpages)_
