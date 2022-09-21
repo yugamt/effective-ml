@@ -88,7 +88,7 @@ c. Integration tests:
         - The flight was great → The flght ws great.
         - Why are we getting so lazy → Why are we gettnig so lazy.
 - Rotating images in object detection.
-
+![](/images/mobiles.png)
 Image: Farmers ensuring they get the same alert for the same trap catch.
 
 ## Directional Expectation Test
@@ -120,7 +120,7 @@ Image: Farmers ensuring they get the same alert for the same trap catch.
         - Template: “I {negation} {positive verb} the {thing}”.
         - Sentences: I can’t say I recommend the book, I didn’t love the flight etc.
 
-
+![](/images/directional_expectation.png)
 ## Minimum Functionality Test
 
 -  Examples:
@@ -128,7 +128,7 @@ Image: Farmers ensuring they get the same alert for the same trap catch.
 
 #### Trap Images^ Non-Trap Images^ Test case designed with failure mode images^
 
-
+![](/images/min_functionality.png)
 ## Summary
 
 - Pre-train test
