@@ -89,8 +89,7 @@ c. Integration tests:
         - Why are we getting so lazy → Why are we gettnig so lazy.
 - Rotating images in object detection.
 
-Image: Farmers ensuring they get the same alert for the same trap catch.
-![](/images/mobiles.png)
+![]({{ https://yugamt.github.io/effective-ml/ }}/images/mobile.png "Farmers ensuring they get the same alert for the same trap catch.")
 
 
 ## Directional Expectation Test
@@ -122,7 +121,7 @@ Image: Farmers ensuring they get the same alert for the same trap catch.
         - Template: “I {negation} {positive verb} the {thing}”.
         - Sentences: I can’t say I recommend the book, I didn’t love the flight etc.
 
-![](/images/directional_expectation.png)
+![]({{ https://yugamt.github.io/effective-ml/ }}/images/directional_expectation.png "")
 ## Minimum Functionality Test
 
 -  Examples:
@@ -130,7 +129,7 @@ Image: Farmers ensuring they get the same alert for the same trap catch.
 
 #### Trap Images^ Non-Trap Images^ Test case designed with failure mode images^
 
-![](/images/min_functionality.png)
+![]({{ https://yugamt.github.io/effective-ml/ }}/images/min_functionality.png "")
 ## Summary
 
 - Pre-train test
@@ -146,7 +145,7 @@ Image: Farmers ensuring they get the same alert for the same trap catch.
     - Minimum functionality test
 
 ## Final ML Pipeline
-![](/images/final_ml.png)
+![]({{ https://yugamt.github.io/effective-ml/ }}/images/final_ml.png "")
 
 ## References
 
