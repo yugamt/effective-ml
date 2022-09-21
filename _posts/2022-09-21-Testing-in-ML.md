@@ -88,8 +88,10 @@ c. Integration tests:
         - The flight was great → The flght ws great.
         - Why are we getting so lazy → Why are we gettnig so lazy.
 - Rotating images in object detection.
-![](/images/mobiles.png)
+
 Image: Farmers ensuring they get the same alert for the same trap catch.
+![](/images/mobiles.png)
+
 
 ## Directional Expectation Test
 
