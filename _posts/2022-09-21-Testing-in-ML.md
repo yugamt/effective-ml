@@ -144,7 +144,7 @@ Image: Farmers ensuring they get the same alert for the same trap catch.
     - Minimum functionality test
 
 ## Final ML Pipeline
-
+![](/images/final_ml.png)
 
 ## References
 
